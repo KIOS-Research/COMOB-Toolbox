@@ -1,0 +1,5 @@
+Licence
+
+Matlab-CONTAM Toolbox is under the EUPL licence. 
+
+

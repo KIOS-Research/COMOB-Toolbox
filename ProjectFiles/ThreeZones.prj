@@ -1,0 +1,236 @@
+ContamW 3.0a 0
+
+! rows cols ud uf    T   uT     N     wH  u  Ao    a
+    58   66  0  4 293.150 2    0.00 10.00 0 0.600 0.280
+! Ta       Pb      Ws    Wd    rh  day u..
+293.150 101325.0  5.000  90.0 0.000 1 2 0 0 1 ! steady simulation
+293.150 101325.0  1.000 270.0 0.000 1 2 0 0 1 ! wind pressure test
+null ! no weather file
+null ! no contaminant file
+null ! no continuous values file
+null ! no discrete values file
+null ! no WPC file
+null ! no EWC file
+WPC description
+!  Xref    Yref    Zref   angle u
+   0.000   0.000   0.000   0.00 0
+! epsP epsS  tShift  dStart dEnd wp mf
+  0.01 0.01 00:00:00   1/1   1/1  0  0
+! latd  longtd   tznr  altd  Tgrnd u..
+ 40.00  -90.00  -6.00     0 283.15 2 0
+!sim_af afcalc afmaxi afrcnvg afacnvg afrelax uac Pbldg uPb
+     1      1     30  1e-005  1e-006    0.75   0 50.00   0
+!   slae rs aflmaxi aflcnvg aflinit Tadj
+      0   1    100  1e-006      1    0
+!sim_mf slae rs maxi   relcnvg   abscnvg relax gamma ucc
+    2             30 1.00e-004 1.00e-015 1.250         0 ! (cyclic)
+          0   1  100 1.00e-006 1.00e-015 1.100 1.000   0 ! (non-trace)
+          0   1  100 1.00e-006 1.00e-015 1.100 1.000   0 ! (trace)
+!sim_sts sim_1dz sim_1dd celldx sim_vjt udx
+     0       1       0    0.100     0    0
+!tsdens relax tsmaxi
+     1   0.75    20
+!date_st time_st  date_0 time_0   date_1 time_1    t_step   t_list   t_scrn
+  Jan01 00:00:00  Jan01 00:00:00  Jan01 12:00:00  00:05:00 00:05:00 01:00:00
+!restart  date  time
+      0  Jan01 00:00:00
+!list doDlg pfsave zfsave zcsave
+   1     1      1      1      1
+!vol ach -bw cbw exp -bw age -bw
+  0   0   0   0   0   0   0   0 
+!...
+ 0 0 0 0 0 0 0 0 0 0 1 1 0 1 0 0 0 0 0 0 0
+2 ! rvals:
+1.2041 9.8055 
+!valZ valD valC
+   0    0    0
+!ctype conv var zref imax dtcmo
+   0 0.010000    0    0 1000    1
+-999
+1 ! contaminants:
+   1
+1 ! species:
+! # s t   molwt    mdiam       edens       decay       Dm          CCdef        Cp    u...  name
+  1 1 0  44.0000 0.0000e+000 0.0000e+000 0.0000e+000 2.0000e-005 6.0776e-004  850.000 7 0 0 0 0 CO2
+Carbon dioxide
+-999
+1 ! levels plus icon data:
+! #  refHt   delHt  ni  u  name
+  1   0.000   3.000 32 0 0 <1>
+!icn col row  #
+  14   5   5   0
+  19  21   5   0
+  19  31   5   0
+  15  47   5   0
+ 185   1  21   1
+ 180   2  21   2
+ 182   4  21   2
+  23   5  21   1
+ 185  17  21   3
+ 180  18  21   4
+ 182  20  21   4
+  25  21  21   2
+ 185  27  21   5
+ 180  28  21   6
+ 182  30  21   6
+  23  31  21   3
+ 185  43  21   7
+ 180  44  21   8
+ 182  46  21   8
+  23  47  21   4
+   5   8  36   1
+ 133  10  36   1
+   5  23  36   2
+   5  33  36   3
+  17   5  39   0
+  21  21  39   0
+  31  25  39   5
+  21  31  39   0
+  16  47  39   0
+ 181  25  40   9
+ 179  25  41   9
+ 185  25  42  10
+-999
+3 ! day-schedules:
+! # npts shap utyp ucnv name
+  1    2    0    1    0 Day_OFF
+
+ 00:00:00 0
+ 24:00:00 0
+  2    8    0    1    0 FanSched
+
+ 00:00:00 1
+ 01:00:00 0
+ 02:00:00 1
+ 03:00:00 0
+ 04:00:00 1
+ 05:00:00 0
+ 06:00:00 1
+ 24:00:00 1
+  3    3    0    1    0 SourceStepSched
+
+ 00:00:00 1
+ 06:00:00 0
+ 24:00:00 1
+-999
+3 ! week-schedules:
+! # utyp ucnv name
+  1    1    0 FanSched
+
+ 2 2 2 2 2 2 2 2 2 2 2 2
+  2    1    0 FanSched_OFF
+
+ 1 1 1 1 1 1 1 1 1 1 1 1
+  3    1    0 SourceStepSched
+
+ 3 3 3 3 3 3 3 3 3 3 3 3
+-999
+0 ! wind pressure profiles:
+-999
+0 ! kinetic reactions:
+-999
+0 ! filter elements:
+-999
+0 ! filters:
+-999
+2 ! source/sink elements:
+1 CO2 ccf CC_CO2
+Adult
+ 1e-005 0 28 0
+2 CO2 ccf cc_co2b
+
+ 0 0 0 0
+-999
+5 ! flow elements:
+1 31 fan_cvf Fan1
+Vconst = 100 m3/h
+ 0.0277778 4
+2 23 plr_orfc Orfc05
+Half closed opening
+ 7.65973e-005 0.0169706 0.5 0.02 0.159577 0.6 30 0 0
+3 23 plr_orfc Orfc1
+
+ 2.70811e-005 0.00848528 0.5 0.01 0.112838 0.6 30 0 0
+4 23 plr_leak3 orf
+
+ 3.62652e-008 0.00034461 0.65 0.6 4 0 0 0.0005 2 2 2 0
+5 25 plr_leak3 orfc
+
+ 1.62479e-006 0.00689219 0.65 0.6 4 0 0 0.01 2 2 2 0
+-999
+0 ! duct elements:
+-999
+0 ! control super elements:
+-999
+10 ! control nodes:
+! # typ seq f n  c1  c2 name
+  1 log   6 1 1   2   0 Path1
+Report input
+ 0 2989.78 1 Path1 sm^3/h
+  2 sns   1 0 0   0   0 <none>
+path sensor
+ 0 1 0 0 1 2 2   0.000   0.000   0.000 0 none
+  3 log   7 1 1   4   0 Path2
+Report input
+ 0 2989.78 1 Path2 sm^3/h
+  4 sns   2 0 0   0   0 <none>
+path sensor
+ 0 1 0 0 2 2 2   0.000   0.000   0.000 0 none
+  5 log   8 1 1   6   0 Path3
+Report input
+ 0 2989.78 1 Path3 sm^3/h
+  6 sns   3 0 0   0   0 <none>
+path sensor
+ 0 1 0 0 3 2 2   0.000   0.000   0.000 0 none
+  7 log   9 1 1   8   0 Path4
+Report input
+ 0 2989.78 1 Path4 sm^3/h
+  8 sns   4 0 0   0   0 <none>
+path sensor
+ 0 1 0 0 4 2 2   0.000   0.000   0.000 0 none
+  9 sns   5 0 0   0   0 <none>
+path sensor
+ 0 1 0 0 5 2 2   0.000   0.000   0.000 0 none
+ 10 log  10 1 1   9   0 Path5
+Report input
+ 0 2989.78 1 Path5 sm^3/h
+-999
+0 ! simple AHS:
+-999
+3 ! zones:
+! Z#  f  s#  c#  k#  l#  relHt    Vol  T0  P0  name  clr u..  axs  1-D data:
+   1  3   0   0   0   1   0.000 99.9999 293.15 0 Room1 -1 0 2 0 0 0 0
+   2  3   0   0   0   1   0.000    20 293.15 0 Corridor -1 0 2 0 0 0 0
+   3  3   0   0   0   1   0.000 99.9999 293.15 0 Room2 -1 0 2 0 0 0 0
+-999
+3 ! initial zone concentrations:
+! Z#        CO2
+   1 6.078e-004
+   2 6.078e-004
+   3 6.078e-004
+-999
+5 ! flow paths:
+! P#    f  n#  m#  e#  f#  w#  a#  s#  c#  l#    X       Y      relHt  mult wPset wPmod wazm Fahs Xmax Xmin icn dir u..
+   1    0  -1   1   3   0   0   0   0   0   1   0.000   0.000   1.500 1 5 0 -1 0 0 0  23  2 0 0 0 0 0
+   2    0   1   2   5   0   0   0   0   0   1   0.000   0.000   1.500 1 0 0 -1 0 0 0  25  2 0 0 0 0 0
+   3    0   2   3   3   0   0   0   0   0   1   0.000   0.000   1.500 1 0 0 -1 0 0 0  23  2 0 0 0 0 0
+   4    0  -1   3   3   0   0   0   0   0   1   0.000   0.000   1.500 1 0 0 -1 0 0 0  23  5 0 0 0 4 0
+   5    0   2  -1   1   0   0   0   0   0   1   0.000   0.000   1.500 1 0 0 180 0 0 0  31  4 0 0 0 0 0
+-999
+0 ! duct junctions:
+-999
+0 ! initial junction concentrations:
+-999
+0 ! duct segments:
+-999
+1 ! source/sinks:
+! #  z#  e#  s#  c#  mult   CC0  (X, Y, H)min  (X, Y, H)max u
+  1   1   1   0   0     1     0  0 0 0  0 0 0  0 0
+-999
+0 ! occupancy schedules:
+-999
+0 ! exposures:
+-999
+0 ! annotations:
+-999
+* end project file.
