@@ -792,7 +792,8 @@ function LevelUp_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
     handles.B.LevelCounter = handles.B.LevelCounter+1;
     
-    if  ~isequal(handles.F.IsolationDecision,zeros(1,handles.F.IsolationDecision))
+%    if  ~isequal(handles.F.IsolationDecision,zeros(1,handles.F.IsolationDecision))
+    if  ~isequal(handles.F.IsolationDecision,handles.F.IsolationDecision)
         plotB(handles.B.X,handles.axes1,handles.B.LevelCounter,handles.F.IsolationDecision);
     else
         plotB(handles.B.X,handles.axes1,handles.B.LevelCounter,zeros(1,handles.B.nZones));
@@ -818,7 +819,8 @@ function LevelDown_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
     handles.B.LevelCounter = handles.B.LevelCounter-1;
-    if  ~isequal(handles.F.IsolationDecision,zeros(1,handles.F.IsolationDecision))
+    %if  ~isequal(handles.F.IsolationDecision,zeros(1,handles.F.IsolationDecision))
+    if  ~isequal(handles.F.IsolationDecision,handles.F.IsolationDecision)
         plotB(handles.B.X,handles.axes1,handles.B.LevelCounter,handles.F.IsolationDecision);
     else
         plotB(handles.B.X,handles.axes1,handles.B.LevelCounter,zeros(1,handles.B.nZones));
