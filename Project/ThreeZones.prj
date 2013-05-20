@@ -1,7 +1,9 @@
-ContamW 3.0a 0
+ContamW 3.1  0
 
 ! rows cols ud uf    T   uT     N     wH  u  Ao    a
     58   66  0  4 293.150 2    0.00 10.00 0 0.600 0.280
+!  scale     us  orgRow  orgCol  invYaxis showGeom
+ 1.000e+000   1      56       1     0        0
 ! Ta       Pb      Ws    Wd    rh  day u..
 293.150 101325.0  5.000  90.0 0.000 1 2 0 0 1 ! steady simulation
 293.150 101325.0  1.000 270.0 0.000 1 2 0 0 1 ! wind pressure test
@@ -14,8 +16,8 @@ null ! no EWC file
 WPC description
 !  Xref    Yref    Zref   angle u
    0.000   0.000   0.000   0.00 0
-! epsP epsS  tShift  dStart dEnd wp mf
-  0.01 0.01 00:00:00   1/1   1/1  0  0
+! epsP epsS  tShift  dStart dEnd wp mf wpctrig
+  0.01 0.01 00:00:00   1/1   1/1  0  0  0
 ! latd  longtd   tznr  altd  Tgrnd u..
  40.00  -90.00  -6.00     0 283.15 2 0
 !sim_af afcalc afmaxi afrcnvg afacnvg afrelax uac Pbldg uPb
@@ -26,26 +28,31 @@ WPC description
     2             30 1.00e-004 1.00e-015 1.250         0 ! (cyclic)
           0   1  100 1.00e-006 1.00e-015 1.100 1.000   0 ! (non-trace)
           0   1  100 1.00e-006 1.00e-015 1.100 1.000   0 ! (trace)
-!sim_sts sim_1dz sim_1dd celldx sim_vjt udx
-     0       1       0    0.100     0    0
-!tsdens relax tsmaxi
-     1   0.75    20
+          0   1  100 1.00e-006 1.00e-015 1.100         0 ! (cvode)
+!mf_solver sim_1dz sim_1dd   celldx  sim_vjt udx
+     0        1       0    1.00e-001    0     0
+!cvode    rcnvg     acnvg    dtmax
+   0    1.00e-006 1.00e-013   0.00
+!tsdens relax tsmaxi cnvgSS densZP stackD dodMdt
+   1    0.75    20     1      1      0      1
 !date_st time_st  date_0 time_0   date_1 time_1    t_step   t_list   t_scrn
   Jan01 00:00:00  Jan01 00:00:00  Jan01 12:00:00  00:05:00 00:05:00 01:00:00
 !restart  date  time
-      0  Jan01 00:00:00
+    0    Jan01 00:00:00
 !list doDlg pfsave zfsave zcsave
    1     1      1      1      1
 !vol ach -bw cbw exp -bw age -bw
-  0   0   0   0   0   0   0   0 
-!...
- 0 0 0 0 0 0 0 0 0 0 1 1 0 1 0 0 0 0 0 0 0
+  0   0   0   0   0   0   0   0
+!rzf rzm rz1 csm srf log
+  0   0   0   1   1   1
+! 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 <- extra[]
+  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
 2 ! rvals:
 1.2041 9.8055 
 !valZ valD valC
    0    0    0
-!ctype conv var zref imax dtcmo
-   0 0.010000    0    0 1000    1
+!cfd  cfdcnvg   var zref  maxi dtcmo
+  0  1.00e-002   0   0    1000   1
 -999
 1 ! contaminants:
    1
