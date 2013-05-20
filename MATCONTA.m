@@ -72,7 +72,7 @@ handles.output = hObject;
 
 path(path,'SPLACE');
 %path(path,'SPLACE\GuiSplace');
-%path(path,'SPLACE\Mfiles');
+path(path,'Help\Logos');
 path(path,'CDI');
 
 
