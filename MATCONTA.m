@@ -1,3 +1,17 @@
+%{
+ Copyright 2013 KIOS Research Center for Intelligent Systems and Networks, University of Cyprus (www.kios.org.cy)
+
+ Licensed under the EUPL, Version 1.1 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
+ You may not use this work except in compliance with theLicence.
+ You may obtain a copy of the Licence at:
+
+ http://ec.europa.eu/idabc/eupl
+
+ Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an "AS IS" basis,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the Licence for the specific language governing permissions and limitations under the Licence.
+%}
+
 function varargout = MATCONTA(varargin)
 % MATCONTA MATLAB code for MATCONTA.fig
 %      MATCONTA, by itself, creates a new MATCONTA or raises the existing
