@@ -12,39 +12,39 @@
  See the Licence for the specific language governing permissions and limitations under the Licence.
 %}
 
-function varargout = MATCONTA(varargin)
-% MATCONTA MATLAB code for MATCONTA.fig
-%      MATCONTA, by itself, creates a new MATCONTA or raises the existing
+function varargout = MatlabContamToolbox(varargin)
+% MatlabContamToolbox MATLAB code for MatlabContamToolbox.fig
+%      MatlabContamToolbox, by itself, creates a new MatlabContamToolbox or raises the existing
 %      singleton*.
 %
-%      H = MATCONTA returns the handle to a new MATCONTA or the handle to
+%      H = MatlabContamToolbox returns the handle to a new MatlabContamToolbox or the handle to
 %      the existing singleton*.
 %
-%      MATCONTA('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in MATCONTA.M with the given input arguments.
+%      MatlabContamToolbox('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in MatlabContamToolbox.M with the given input arguments.
 %
-%      MATCONTA('Property','Value',...) creates a new MATCONTA or raises the
+%      MatlabContamToolbox('Property','Value',...) creates a new MatlabContamToolbox or raises the
 %      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before MATCONTA_OpeningFcn gets called.  An
+%      applied to the GUI before MatlabContamToolbox_OpeningFcn gets called.  An
 %      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to MATCONTA_OpeningFcn via varargin.
+%      stop.  All inputs are passed to MatlabContamToolbox_OpeningFcn via varargin.
 %
 %      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
 %      instance to run (singleton)".
 %
 % See also: GUIDE, GUIDATA, GUIHANDLES
 
-% edit the above text to modify the response to help MATCONTA
+% edit the above text to modify the response to help MatlabContamToolbox
 
-% Last Modified by GUIDE v2.5 16-May-2013 14:14:32
+% Last Modified by GUIDE v2.5 21-May-2013 14:45:55
 
 % Begin initialization code - DO NOT EDIT
 clc
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @MATCONTA_OpeningFcn, ...
-                   'gui_OutputFcn',  @MATCONTA_OutputFcn, ...
+                   'gui_OpeningFcn', @MatlabContamToolbox_OpeningFcn, ...
+                   'gui_OutputFcn',  @MatlabContamToolbox_OutputFcn, ...
                    'gui_LayoutFcn',  [] , ...
                    'gui_Callback',   []);
 if nargin && ischar(varargin{1})
@@ -59,15 +59,15 @@ end
 % End initialization code - DO NOT EDIT
 
 
-% --- Executes just before MATCONTA is made visible.
-function MATCONTA_OpeningFcn(hObject, eventdata, handles, varargin)
+% --- Executes just before MatlabContamToolbox is made visible.
+function MatlabContamToolbox_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-% varargin   command line arguments to MATCONTA (see VARARGIN)
+% varargin   command line arguments to MatlabContamToolbox (see VARARGIN)
 
-% Choose default command line output for MATCONTA
+% Choose default command line output for MatlabContamToolbox
 handles.output = hObject;
 
 path(path,'SPLACE');
@@ -165,13 +165,13 @@ handles.choice = 1;
 % Update handles structure
 guidata(hObject, handles);
 
-% UIWAIT makes MATCONTA wait for user response (see UIRESUME)
+% UIWAIT makes MatlabContamToolbox wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
 
 
 % --- Outputs from this function are returned to the command line.
-function varargout = MATCONTA_OutputFcn(hObject, eventdata, handles) 
+function varargout = MatlabContamToolbox_OutputFcn(hObject, eventdata, handles) 
 
 % Get pushbutton string from handles structure and output it
 % varargout{1} = handles.opn
