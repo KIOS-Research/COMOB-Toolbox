@@ -8,4 +8,4 @@ Bug Report
 -When the program is open and then it is reloaded again, it does not clear trigger a message box and it does not clean the network plot.
 -Validate MATCONTA lines 795, 822
 -Problem when running a 3.0 building with ContamX3.1.
- 
+-Add Help drop menu with About and Instructions
