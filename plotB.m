@@ -1,7 +1,7 @@
 %{
  Copyright 2013 KIOS Research Center for Intelligent Systems and Networks, University of Cyprus (www.kios.org.cy)
 
- Licensed under the EUPL, Version 1.1 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
+ Licensed under the EUPL, Version 1.1 or ï¿½ as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
  You may not use this work except in compliance with theLicence.
  You may obtain a copy of the Licence at:
 
@@ -13,6 +13,10 @@
 %}
 
 function plotB(X,fig,Level,Decision)
+    
+    out = textscan(X.project{4},'%s','delimiter',' ','multipleDelimsAsOne',1);
+    ylim = str2double(out{1}{1});
+    xlim = str2double(out{1}{2});
     
     j =1; i=5;
     while (j ~= Level)
@@ -103,5 +107,5 @@ function plotB(X,fig,Level,Decision)
         end
     end
     
-   set(gca,'YDir','reverse', 'YMinorGrid', 'off', 'XLim' , [0 55], 'YLim', [0 60])
+   set(gca,'YDir','reverse', 'YMinorGrid', 'off', 'XLim' , [0 xlim], 'YLim', [0 ylim])
 end
