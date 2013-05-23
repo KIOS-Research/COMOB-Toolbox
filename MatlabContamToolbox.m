@@ -70,10 +70,11 @@ function MatlabContamToolbox_OpeningFcn(hObject, eventdata, handles, varargin)
 % Choose default command line output for MatlabContamToolbox
 handles.output = hObject;
 
-path(path,'SPLACE');
+path(path,genpath(pwd));
+%path(path,'SPLACE');
 %path(path,'SPLACE\GuiSplace');
-path(path,'Help\Logos');
-path(path,'CDI');
+%path(path,'Help\Logos');
+%path(path,'CDI');
 
 
 %rgb= imread('kios_logo.png');
@@ -1618,9 +1619,10 @@ function figure1_CloseRequestFcn(hObject, eventdata, handles)
 % hObject    handle to figure1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-rmpath('SPLACE');
+%rmpath('SPLACE');
 %rmpath('SPLACE\GuiSplace');
 %rmpath('SPLACE\Mfiles');
-rmpath('CDI');
+%rmpath('CDI');
+rmpath(genpath(pwd));
 % Hint: delete(hObject) closes the figure
 delete(hObject);
