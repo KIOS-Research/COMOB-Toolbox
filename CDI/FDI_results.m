@@ -1,7 +1,7 @@
 %{
  Copyright 2013 KIOS Research Center for Intelligent Systems and Networks, University of Cyprus (www.kios.org.cy)
 
- Licensed under the EUPL, Version 1.1 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
+ Licensed under the EUPL, Version 1.1 or ï¿½ as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
  You may not use this work except in compliance with theLicence.
  You may obtain a copy of the Licence at:
 
@@ -79,14 +79,14 @@ function FDI_results_OpeningFcn(hObject, eventdata, handles, varargin)
         handles.chooseZoneIsolation(i) = false;
     end
     %Detection Time
-    min = handles.F.DetectionTime - fix(handles.F.DetectionTime);
-    sec = min - fix(min);
-    set(handles.edit1, 'String', sprintf('%02d:%02d:%02d',fix(handles.F.DetectionTime),fix(min*60),fix(sec*60)));
+    min = (handles.F.DetectionTime - fix(handles.F.DetectionTime))*60;
+    sec = (min - fix(min))*60;
+    set(handles.edit1, 'String', sprintf('%02d:%02d:%02d',fix(handles.F.DetectionTime),fix(min),fix(sec)));
     
     %Isolation Time
-    min = handles.F.IsolationTime - fix(handles.F.IsolationTime);
-    sec = min - fix(min);
-    set(handles.edit2, 'String', sprintf('%02d:%02d:%02d',fix(handles.F.IsolationTime),fix(min*60),fix(sec*60)));
+    min = (handles.F.IsolationTime - fix(handles.F.IsolationTime))*60;
+    sec = (min - fix(min))*60;
+    set(handles.edit2, 'String', sprintf('%02d:%02d:%02d',fix(handles.F.IsolationTime),fix(min),fix(sec)));
     
 %     set(handles.edit2, 'String', num2str(handles.F.IsolationTime));
     [s1 s2 s3] = size(handles.F.IsolationResidual);
