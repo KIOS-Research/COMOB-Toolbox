@@ -56,54 +56,62 @@ function plotB(X,fig,Level,Decision)
         end
     end
 
-    col = Data(1,2);
-    row = Data(1,3);
-    
     axes(fig)
     cla
     
-    hold on
-    for i = 2:length(Data)
-        if row == Data(i,3)
-            if (Data(i,1) == 15) || (Data(i,1) == 16) || (Data(i,1) == 20)
-                X = col:0.01:Data(i,2);
-                plot( X, ones(length(X),1).*row,'.','LineWidth',3,'MarkerSize',4)
-            end
-        elseif (Data(i,1) == 22) || (Data(i,1) == 21) || (Data(i,1) == 19)
-        else
-            row = Data(i,3);
-            col = Data(i,2);
-        end
-    end
-
-    C = sortrows(Data,2);
-    col = C(1,2);
-    row = C(1,3);
-        
-    for i = 2:length(C)
-        if col == C(i,2)
-            if (C(i,1) == 17) || (C(i,1) == 16)|| (C(i,1) == 21)
-                Y = row:0.01:C(i,3);
-                plot( ones(length(Y),1).*col, Y,'.','LineWidth',3,'MarkerSize',4)
-            end
-        elseif (C(i,1) == 22) || (C(i,1) == 20) || (C(i,1) == 18)
-        else
-            row = C(i,3);
-            col = C(i,2);
-        end
-    end
-    s=size(Data2);
-    for i = 1:s(1)
-        plot(Data2(i,2), Data2(i,3), 'o','LineWidth',4,'MarkerSize',3)
-        text(Data2(i,2)+0.5, Data2(i,3), ['P',num2str(Data2(i,4))])
+    if  exist('Data','var')
+    
+         col = Data(1,2);
+         row = Data(1,3);      
+         
+         hold on
+         for i = 2:length(Data)
+             if row == Data(i,3)
+                 if (Data(i,1) == 15) || (Data(i,1) == 16) || (Data(i,1) == 20)
+                     X = col:0.01:Data(i,2);
+                     plot( X, ones(length(X),1).*row,'.','LineWidth',3,'MarkerSize',4)
+                 end
+             elseif (Data(i,1) == 22) || (Data(i,1) == 21) || (Data(i,1) == 19)
+             else
+                 row = Data(i,3);
+                 col = Data(i,2);
+             end
+         end
+     
+         C = sortrows(Data,2);
+         col = C(1,2);
+         row = C(1,3);
+             
+         for i = 2:length(C)
+             if col == C(i,2)
+                 if (C(i,1) == 17) || (C(i,1) == 16)|| (C(i,1) == 21)
+                     Y = row:0.01:C(i,3);
+                     plot( ones(length(Y),1).*col, Y,'.','LineWidth',3,'MarkerSize',4)
+                 end
+             elseif (C(i,1) == 22) || (C(i,1) == 20) || (C(i,1) == 18)
+             else
+                 row = C(i,3);
+                 col = C(i,2);
+             end
+         end
     end
     
-    s=size(Data3);
-    for i = 1:s(1)
-        plot(Data3(i,2), Data3(i,3), '--rs', 'LineWidth',2,'MarkerEdgeColor','k')
-        text(Data3(i,2), Data3(i,3), ['\leftarrow Z',num2str(Data3(i,4))])
-        if find(Decision(i))
-            plot(Data3(i,2), Data3(i,3), 'o', 'LineWidth',7,'MarkerSize',7,'MarkerEdgeColor','r')
+    if  exist('Data2','var')
+        s=size(Data2);
+        for i = 1:s(1)
+            plot(Data2(i,2), Data2(i,3), 'o','LineWidth',4,'MarkerSize',3)
+            text(Data2(i,2)+0.5, Data2(i,3), ['P',num2str(Data2(i,4))])
+        end
+    end
+    
+    if  exist('Data3','var')
+        s=size(Data3);
+        for i = 1:s(1)
+            plot(Data3(i,2), Data3(i,3), '--rs', 'LineWidth',2,'MarkerEdgeColor','k')
+            text(Data3(i,2), Data3(i,3), ['\leftarrow Z',num2str(Data3(i,4))])
+            if find(Decision(i))
+                plot(Data3(i,2), Data3(i,3), 'o', 'LineWidth',7,'MarkerSize',7,'MarkerEdgeColor','r')
+            end
         end
     end
     
