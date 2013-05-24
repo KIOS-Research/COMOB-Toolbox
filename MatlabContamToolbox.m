@@ -1,7 +1,7 @@
 %{
  Copyright 2013 KIOS Research Center for Intelligent Systems and Networks, University of Cyprus (www.kios.org.cy)
 
- Licensed under the EUPL, Version 1.1 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
+ Licensed under the EUPL, Version 1.1 or ï¿½ as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
  You may not use this work except in compliance with theLicence.
  You may obtain a copy of the Licence at:
 
@@ -793,13 +793,9 @@ function LevelUp_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
     handles.B.LevelCounter = handles.B.LevelCounter+1;
     
-%    if  ~isequal(handles.F.IsolationDecision,zeros(1,handles.F.IsolationDecision))
-    if  ~isequal(handles.F.IsolationDecision,handles.F.IsolationDecision)
-        plotB(handles.B.X,handles.axes1,handles.B.LevelCounter,handles.F.IsolationDecision);
-    else
-        plotB(handles.B.X,handles.axes1,handles.B.LevelCounter,zeros(1,handles.B.nZones));
-    end
 
+    plotB(handles.B.X,handles.axes1,handles.B.LevelCounter,handles.F.IsolationDecision);
+    
     if handles.B.LevelCounter==handles.level
         set(handles.LevelUp, 'Enable', 'off', 'Visible', 'off')
     else
@@ -820,13 +816,9 @@ function LevelDown_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
     handles.B.LevelCounter = handles.B.LevelCounter-1;
-    %if  ~isequal(handles.F.IsolationDecision,zeros(1,handles.F.IsolationDecision))
-    if  ~isequal(handles.F.IsolationDecision,handles.F.IsolationDecision)
-        plotB(handles.B.X,handles.axes1,handles.B.LevelCounter,handles.F.IsolationDecision);
-    else
-        plotB(handles.B.X,handles.axes1,handles.B.LevelCounter,zeros(1,handles.B.nZones));
-    end
-
+    
+    plotB(handles.B.X,handles.axes1,handles.B.LevelCounter,handles.F.IsolationDecision);
+    
     if handles.B.LevelCounter==handles.level
         set(handles.LevelUp, 'Enable', 'off', 'Visible', 'off')
     else
@@ -1341,9 +1333,9 @@ function FDIrun_Callback(hObject, eventdata, handles)
     
     if i<length(handles.t)
         handles.F.DetectionTime = handles.t(i);
-        min = handles.t(i) - fix(handles.t(i));
-        sec = min - fix(min);
-        uiwait(msgbox(sprintf('Contaminant Source Detected at Time %02d:%02d:%02d',fix(handles.t(i)), fix(min*60), fix(sec*60)), 'Warning', 'warn'));
+        min = (handles.t(i) - fix(handles.t(i)))*60;
+        sec = (min - fix(min))*60;
+        uiwait(msgbox(sprintf('Contaminant Source Detected at Time %02d:%02d:%02d',fix(handles.t(i)), fix(min), fix(sec)), 'Warning', 'warn'));
         pause(1)
     else
         uiwait(msgbox('No Contaminant Source', 'Warning', 'warn'));
