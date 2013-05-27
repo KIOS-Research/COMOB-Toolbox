@@ -10,9 +10,14 @@ The `Matlab-CONTAM Toolbox` features a user-friendly Graphical User Interface (G
 * [CONTAM v3.1](http://www.bfrl.nist.gov/IAQanalysis/CONTAM/)
 
 # How to cite this work #
+Contamination Event Detection
+* Michaelides, M., Reppa, V., Panayiotou, C., Polycarpou, M.: Contaminant event monitoring in intelligent buildings using a multi-zone formulation. In: Proc. of SAFEPROCESS. Mexico City, Mexico (2012) [ref](http://www.ifac-papersonline.net/Detailed/55365.html)
+
+Quality Sensor Placement
+* Eliades, D., Michaelides, M., Panayiotou, C., Polycarpou, M.: Security-oriented sensor placement in intelligent buildings. *Building and Environment* 63, 114--121 (2013) [ref](http://www.sciencedirect.com/science/article/pii/S0360132313000553)
 
 Holmes House
-* Wang, L.; Dols, W. & Chen, Q. (2010), 'Using CFD Capabilities of CONTAM 3.0 for Simulating Airflow and Contaminant Transport in and around Buildings', HVAC&R Research 16(6), 749--763.
+* Wang, L., Dols, W., Chen, Q.: Using CFD capabilities of CONTAM 3.0 for simulating air flow and contaminant transport in and around buildings. HVAC&R Research, 16(6), 749--763 (Nov 2010) [ref](http://www.tandfonline.com/doi/abs/10.1080/10789669.2010.10390932#.UaMcctI5F8E)
 
 # Licences #
 
