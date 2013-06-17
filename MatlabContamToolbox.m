@@ -36,7 +36,7 @@ function varargout = MatlabContamToolbox(varargin)
 
 % edit the above text to modify the response to help MatlabContamToolbox
 
-% Last Modified by GUIDE v2.5 21-May-2013 14:45:55
+% Last Modified by GUIDE v2.5 17-Jun-2013 15:39:09
 
 % Begin initialization code - DO NOT EDIT
 clc
@@ -1618,3 +1618,26 @@ function figure1_CloseRequestFcn(hObject, eventdata, handles)
 rmpath(genpath(pwd));
 % Hint: delete(hObject) closes the figure
 delete(hObject);
+
+
+% --------------------------------------------------------------------
+function Help_Callback(hObject, eventdata, handles)
+% hObject    handle to Help (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --------------------------------------------------------------------
+function About_Callback(hObject, eventdata, handles)
+% hObject    handle to About (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+about;
+
+% --------------------------------------------------------------------
+function Instructions_Callback(hObject, eventdata, handles)
+% hObject    handle to Instructions (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+web('Instructions.html');
