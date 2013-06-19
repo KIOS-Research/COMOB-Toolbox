@@ -55,9 +55,11 @@ function runMultipleScenariosGui_OpeningFcn(hObject, eventdata, handles, varargi
     handles.file0 = varargin{1}.file0;
     handles.B = varargin{1}.B;
         
-    if exist([handles.file0,'.0'],'file')==2
+    load([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
+
+    if exist([pathname,handles.file0,'.0'],'file')==2
         if ~isempty([handles.file0,'.0']) 
-            load([handles.file0,'.0'],'-mat');
+            load([pathname,handles.file0,'.0'],'-mat');
             handles.P=P;
         else
             B.filename=handles.B.filename;
@@ -111,14 +113,20 @@ function load_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-    [file01,pathName] = uigetfile('*.0','Select the MATLAB *.0 file');
-    file0=[pathName,file01];
+    load([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
+
+    [file0,pathNM] = uigetfile([pathname,'*.0'],'Select the MATLAB *.0 file');
+    if length(pathNM)~=1
+        pathname=pathNM;
+    end
+    
     file0=file0(1:end-2);
     if isnumeric(file0)
         file0=[];
     end
     if ~isempty((file0)) 
-        load([file0,'.0'],'-mat');
+        save([pwd,'\SPLACE\RESULTS\','File0.File'],'file0','-mat');
+        load([pathname,file0,'.0'],'-mat');
         handles.file0=file0;
         if ~strcmp(handles.B.filename,B.filename)
             set(handles.start,'enable','off');
@@ -133,7 +141,8 @@ function load_Callback(hObject, eventdata, handles)
         % Update handles structure
         guidata(hObject, handles);
     end
-
+    save([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
+    
 % --- Executes on mouse press over axes background.
 function axes2_ButtonDownFcn(hObject, eventdata, handles)
 % hObject    handle to axes2 (see GCBO)

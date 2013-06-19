@@ -3,10 +3,10 @@ Bug Report
 
 23 May 2013 [DE]
 ------------------------------
--All Save in Results folder
+-All Save in Results folder -OK
 -Remove extra buttons
 -Add message box
--Change folder for Project.File
+-Change folder for Project.File -OK
 
 20 May 2013 [DE]
 ------------------------------

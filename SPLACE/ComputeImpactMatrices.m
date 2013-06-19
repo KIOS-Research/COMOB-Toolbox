@@ -19,6 +19,7 @@ function ComputeImpactMatrices(varargin)
         W.SensorThreshold=varargin{1}.SensorThreshold1;  
         W.InhalationRate=varargin{1}.InhalationRate1; 
         W.ZoneOccupancy=varargin{1}.ZoneOccupancy; 
+        load([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
     else
         file0=varargin{1};
         %IMPACT CALCULATION
@@ -29,7 +30,10 @@ function ComputeImpactMatrices(varargin)
     end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    load([file0,'.0'],'-mat');
+    load([pathname,file0,'.0'],'-mat')
+%     load([pathname,file0,'.c0'],'-mat')
+%     load([pathname,'Simulate.Method'],'SimulateMethod','-mat');
+    
     disp('Compute Impact Matrix')
     U1=W.SensorThreshold;
     Dt=P.TimeStep;
@@ -42,7 +46,7 @@ function ComputeImpactMatrices(varargin)
         %tmpfile=[Cfile,num2str(i)];
         %disp(tmpfile)
         %load(tmpfile,'-mat');
-        load([file0,'.c',num2str(i)],'-mat');
+        load([pathname,file0,'.c',num2str(i)],'-mat')
         for k=1:size(P.ScenariosContamIndex,1)
             %c=single(C.x{k})/1000;
             c=(C.x{k});
@@ -75,5 +79,5 @@ function ComputeImpactMatrices(varargin)
             l=l+1;
         end
     end
-    save([file0,'.w'],'W', '-mat');
+    save([pathname,file0,'.w'],'W','-mat');
 end

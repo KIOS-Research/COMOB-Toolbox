@@ -454,8 +454,7 @@ function Create_Callback(hObject, eventdata, handles)
     P=CreateScenarios(handles);
     B=handles.B;
 
-    [file0, pathname] = uiputfile('*.0');
-    file0=[pathname,file0];
+    [file0,pathname] = uiputfile([pwd,'\SPLACE\RESULTS\','*.0']);
     if isnumeric(file0)
         file0=[];
     end
@@ -463,8 +462,9 @@ function Create_Callback(hObject, eventdata, handles)
         % Update handles structure
         guidata(hObject, handles);
 
-        save(file0,'P','B','-mat');
-        save('Project.File','file0','-mat')
+        save([pathname,file0],'P','B','-mat');
+        save([pwd,'\SPLACE\RESULTS\','File0.File'],'file0','-mat');
+        save([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
         if exist([file0(1:end-2),'.w'],'file')==2
             delete([file0(1:end-2),'.w']);
         end
@@ -636,8 +636,10 @@ function Load_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-    [file0,pathName] = uigetfile('*.0','Select the MATLAB *.0 file');
-    file0=[pathName,file0];
+    load([pwd,'\RESULTS\','pathname.File'],'pathname','-mat');
+
+    [file0,pathname] = uigetfile([pathname,'*.0'],'Select the MATLAB *.0 file');
+    
     if isnumeric(file0)
         file0=[];
     end
@@ -650,6 +652,7 @@ function Load_Callback(hObject, eventdata, handles)
             msgbox('  Scenarios are not on this project file','Error','modal');
         end
     end
+    save([pwd,'\RESULTS\','pathname.File'],'pathname','-mat');
 
 
 % --- Executes when entered data in editable cell(s) in ZoneTable.

@@ -63,9 +63,9 @@ function P=CreateScenarios(varargin)
         P.ScenariosContamIndex=cartesianProduct(ContamScenarioSets);
     end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    if ~isstruct(varargin{1})
-        file0='test';
-        save([file0,'.0'],'P','B','-mat');
-    end
+%     if ~isstruct(varargin{1})
+%         file0='test';
+%         save([file0,'.0'],'P','B','-mat');
+%     end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end

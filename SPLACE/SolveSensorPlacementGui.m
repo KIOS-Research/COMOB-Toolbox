@@ -73,17 +73,18 @@ function SolveSensorPlacementGui_OpeningFcn(hObject, eventdata, handles, varargi
     % uiwait(handles.figure1);
 
     set(handles.figure1,'name','Solve Sensor Placement');
-    
+
     handles.file0 = varargin{1}.file0;
     handles.B = varargin{1}.B;
     handles.MainGuiaxes1 = varargin{1}.axes1;
 
     set(handles.LoadImpactMatrix,'enable','off');
     set(handles.Solve,'enable','off');
-    
-    if exist([handles.file0,'.0'],'file')==2
+    load([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
+
+    if exist([pathname,handles.file0,'.0'],'file')==2
         if ~isempty([handles.file0,'.0']) 
-            load([handles.file0,'.0'],'-mat');
+            load([pathname,handles.file0,'.0'],'-mat');
         else
             B.filename=handles.B.filename;
         end
@@ -95,9 +96,9 @@ function SolveSensorPlacementGui_OpeningFcn(hObject, eventdata, handles, varargi
         set(handles.FileText0,'String','')
     else
         set(handles.FileText0,'String',[handles.file0,'.0'])
-        if exist([handles.file0,'.w'],'file')==2
+        if exist([pathname,handles.file0,'.w'],'file')==2
             set(handles.Solve,'enable','on');
-            if exist([handles.file0,'.w'],'file')==2
+            if exist([pathname,handles.file0,'.w'],'file')==2
                 set(handles.FileTextW,'String',[handles.file0,'.w']);
             end
             set(handles.LoadImpactMatrix,'enable','on');

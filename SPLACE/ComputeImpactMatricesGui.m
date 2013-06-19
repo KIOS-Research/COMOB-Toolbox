@@ -51,11 +51,11 @@ function ComputeImpactMatricesGui_OpeningFcn(hObject, eventdata, handles, vararg
 
     handles.file0 = varargin{1}.file0;
     handles.B = varargin{1}.B;    
+    load([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
 
-
-    if exist([handles.file0,'.0'],'file')
+    if exist([pathname,handles.file0,'.0'],'file')
         if ~isempty([handles.file0,'.0']) 
-            load([handles.file0,'.0'],'-mat');
+            load([pathname,handles.file0,'.0'],'-mat');
         else
             B.filename=handles.B.filename;
         end

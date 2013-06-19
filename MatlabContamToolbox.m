@@ -1090,13 +1090,15 @@ function Calculate_Callback(hObject, eventdata, handles)
 % hObject    handle to Calculate (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
- close(findobj('type','figure','name','Run Multiple Scenarios'))
+    close(findobj('type','figure','name','Run Multiple Scenarios'))
 
-    if exist('Project.File','file')==2 
-        load Project.File -mat;
-        if exist(file0,'file')==2
+    load([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
+    
+    if exist('File0.File','file')==2 
+        load([pwd,'\SPLACE\RESULTS\','File0.File'],'-mat');
+        if exist([pathname,file0],'file')==2
             if ~isempty(file0) 
-                load(file0,'-mat');
+                load([pathname,file0],'-mat');
             else
                 B.filename=handles.B.filename;
             end
@@ -1551,13 +1553,13 @@ function ComputeImpactMatrix_Callback(hObject, eventdata, handles)
 % hObject    handle to ComputeImpactMatrix (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-close(findobj('type','figure','name','Compute Impact Matrix'))
+    load([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
 
-    if exist('Project.File','file')==2 
-        load Project.File -mat;
-        if exist(file0,'file')==2
+    if exist('File0.File','file')==2 
+        load([pwd,'\SPLACE\RESULTS\','File0.File'],'-mat');
+        if exist([pathname,file0],'file')==2
             if ~isempty(file0) 
-                load(file0,'-mat');
+                load([pathname,file0],'-mat');
             else
                 B.filename=handles.B.filename;
             end
@@ -1577,14 +1579,15 @@ function SolveSensorPlacement_Callback(hObject, eventdata, handles)
 % hObject    handle to SolveSensorPlacement (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-close(findobj('type','figure','name','Solve Sensor Placement'))
+    close(findobj('type','figure','name','Solve Sensor Placement'))
+    load([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
 
-    if exist('Project.File','file')==2 
-        load Project.File -mat;
-        if exist(file0,'file')==2
+    if exist('File0.File','file')==2 
+        load([pwd,'\SPLACE\RESULTS\','File0.File'],'-mat');
+        if exist([pathname,file0],'file')==2
             if ~isempty(file0) 
-                load(file0,'-mat');
-                if exist([file0(1:end-2),'.w'],'file')==2
+                    load([pathname,file0],'-mat');
+                if exist([pathname,file0(1:end-2),'.w'],'file')==2
                 else
                     B.filename=[];
                 end
@@ -1602,9 +1605,7 @@ close(findobj('type','figure','name','Solve Sensor Placement'))
     arguments.B=handles.B;
     arguments.axes1=handles.axes1;
     SolveSensorPlacementGui(arguments);
-    
-    
-
+  
 
 % --- Executes when user attempts to close figure1.
 function figure1_CloseRequestFcn(hObject, eventdata, handles)

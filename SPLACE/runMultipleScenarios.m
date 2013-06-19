@@ -18,12 +18,15 @@ function runMultipleScenarios(varargin)
         file0=varargin{1}.file0;
         P=varargin{1}.P;
         B=varargin{1}.B;
+        load([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
     else
         file0=varargin{1};
+        pathname=[pwd,'\RESULTS\'];
     end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    load([file0,'.0'],'-mat');
+    load([pathname,file0,'.0'],'-mat');
+    
     disp('Run Multiple Scenarios')
     %    P.FlowParameters={'WindDirection', 'WindSpeed','AmbientTemperature',...
     %    'ZonesVolume', 'ZoneTemperature','PathOpenings'};
@@ -69,7 +72,7 @@ function runMultipleScenarios(varargin)
             end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         end
-        save([file0,'.c',num2str(l)],'C', '-mat');
+        save([pathname,file0,'.c',num2str(l)],'C', '-mat');
         clear C;
     end
 end

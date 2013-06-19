@@ -77,12 +77,14 @@ function SolutionsSesnorsGui_OpeningFcn(hObject, eventdata, handles, varargin)
     handles.B=varargin{1}.B;
     handles.MainGuiaxes1=varargin{1}.MainGuiaxes1;
     handles.pp.numberOfSensors=varargin{1}.pp.numberOfSensors;
-    
+   
+    load([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
+
     value = get(handles.Exhaustive,'Value');
     if value==1
-        load([handles.file0,'.y0'],'Y', '-mat'); %Exhaustive method
+        load([pathname,handles.file0,'.y0'],'Y', '-mat'); %Exhaustive method
     else
-        load([handles.file0,'.y1'],'Y', '-mat'); %Evolutionary method
+        load([pathname,handles.file0,'.y1'],'Y', '-mat'); %Evolutionary method
     end
     
     set(handles.SplaceTable,'Foregroundcolor','b');  

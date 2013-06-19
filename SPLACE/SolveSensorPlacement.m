@@ -21,6 +21,7 @@ function SolveSensorPlacement(varargin)
         ParetoFraction_Data=varargin{1}.pp.ParetoFraction_Data;
         Generations_Data=varargin{1}.pp.Generations_Data;
         numberOfSensors=str2num(varargin{1}.pp.numberOfSensors);
+        load([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
     else
         file0=varargin{1};
         %numberOfSensors=1:B.CountNodes; % EDITABLE,
@@ -31,8 +32,8 @@ function SolveSensorPlacement(varargin)
         numberOfSensors=1:14;
     end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    load([file0,'.0'],'-mat');
-    load([file0,'.w'],'-mat');
+    load([pathname,file0,'.0'],'-mat')
+    load([pathname,file0,'.w'],'-mat')
     
     disp('Solve Sensor Placement')
     switch solutionMethod
@@ -97,7 +98,7 @@ function SolveSensorPlacement(varargin)
                 Y.F=[Y.F; y(sols,:)];
                 k=k+1;
             end
-            save([file0,'.y0'],'Y', '-mat');
+            save([pathname,file0,'.y0'],'Y', '-mat');
             %%%%%%%%%%%%%%%%
             if isstruct(varargin{1}) 
                 close(v.figure1);
@@ -119,7 +120,7 @@ function SolveSensorPlacement(varargin)
             else
                 disp('GAMULTIOBJ is not currenty installed in MATLAB')
             end
-            save([file0,'.y1'],'Y', '-mat');
+            save([pathname,file0,'.y1'],'Y', '-mat');
     end    
 end
 
