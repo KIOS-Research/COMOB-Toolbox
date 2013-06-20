@@ -210,6 +210,7 @@ function PlotDetection_Callback(hObject, eventdata, handles)
                 end
                 legend('Threshold', 'Location', 'Best')
             end
+        end
                    
         if ~get(handles.DetectionThreshold, 'Value')&get(handles.DetectionResidual, 'Value')
             zones = find(handles.chooseZoneDetection);
