@@ -184,7 +184,6 @@ function PlotDetection_Callback(hObject, eventdata, handles)
         for i=1:handles.B.nZones
             if handles.chooseZoneDetection(i)
                 k=1;
-%                 zones = zones + 1;
             end
         end
         if (k==0)
@@ -194,7 +193,6 @@ function PlotDetection_Callback(hObject, eventdata, handles)
         
         if get(handles.DetectionThreshold, 'Value')&~get(handles.DetectionResidual, 'Value')
             zones = find(handles.chooseZoneDetection);
-%             k = 1;
             set(figure, 'Name', 'Detection Results');
             if length(zones)==1
                 plot(handles.t, handles.F.DetectionThreshold(:,zones),'--')
@@ -212,18 +210,7 @@ function PlotDetection_Callback(hObject, eventdata, handles)
                 end
                 legend('Threshold', 'Location', 'Best')
             end
-            
-%             for i=1:length(zones)
-%                 if mod(i,2)
-%                     axes('position',[0.05, (round(length(zones)/2)-k)/round(length(zones)/2), (1/length(zones)), (1/length(zones))])
-%                     
-%                 else
-%                     axes('position',[0.6, (round(length(zones)/2)-k)/round(length(zones)/2),(1/length(zones)), (1/length(zones))])
-%                     k = k + 1;
-%                 end
-%             end
-        end
-        
+                   
         if ~get(handles.DetectionThreshold, 'Value')&get(handles.DetectionResidual, 'Value')
             zones = find(handles.chooseZoneDetection);
             set(figure, 'Name', 'Detection Results');
