@@ -348,6 +348,7 @@ function PlotIsolation_Callback(hObject, eventdata, handles)
                 plot(handles.t(DT:end), handles.F.IsolationThreshold(zones,:,Isolator),'--')
                 title(sprintf('CIE%d at Zone %d.%s',Isolator ,zones,handles.B.ZoneName{zones}))
                 xlabel('Time (h)')
+                ylim([-0.5 max(handles.F.IsolationThreshold(zones,:,Isolator))+0.5])
                 legend('Threshold', 'Location', 'Best')                
             else
                 for i=1:length(zones)
@@ -355,6 +356,7 @@ function PlotIsolation_Callback(hObject, eventdata, handles)
                     plot(handles.t(DT:end), handles.F.IsolationThreshold(zones(i),:,Isolator),'--')
                     title(sprintf('CIE%d at Zone %d.%s',Isolator ,zones(i),handles.B.ZoneName{zones(i)}))
                     xlabel('Time (h)')
+                    ylim([-0.5 max(handles.F.IsolationThreshold(zones(i),:,Isolator))+0.5])
                 end
                 legend('Threshold', 'Location', 'Best')
             end
@@ -368,6 +370,7 @@ function PlotIsolation_Callback(hObject, eventdata, handles)
                 plot(handles.t(DT:end), handles.F.IsolationResidual(zones,:,Isolator),'r')
                 title(sprintf('CIE%d at Zone %d.%s',Isolator ,zones,handles.B.ZoneName{zones}))
                 xlabel('Time (h)')
+                ylim([-0.5 max(handles.F.IsolationResidual(zones,:,Isolator))+0.5])
                 legend('Residual', 'Location', 'Best')                
             else
                 for i=1:length(zones)
@@ -375,6 +378,7 @@ function PlotIsolation_Callback(hObject, eventdata, handles)
                     plot(handles.t(DT:end), handles.F.IsolationResidual(zones(i),:,Isolator),'r')
                     title(sprintf('CIE%d at Zone %d.%s',Isolator ,zones(i),handles.B.ZoneName{zones(i)}))
                     xlabel('Time (h)')
+                    ylim([-0.5 max(handles.F.IsolationResidual(zones(i),:,Isolator))+0.5])
                 end
                 legend('Residual', 'Location', 'Best')
             end
@@ -390,6 +394,7 @@ function PlotIsolation_Callback(hObject, eventdata, handles)
                 plot(handles.t(DT:end), handles.F.IsolationThreshold(zones,:,Isolator),'--')
                 title(sprintf('CIE%d at Zone %d.%s',Isolator, zones,handles.B.ZoneName{zones}))
                 xlabel('Time (h)')
+                ylim([-0.5 max([handles.F.IsolationResidual(zones,:,Isolator), handles.F.IsolationThreshold(zones,:,Isolator)])+0.5])
                 legend('Residual', 'Threshold', 'Location', 'Best')                
             else
                 for i=1:length(zones)
@@ -399,6 +404,7 @@ function PlotIsolation_Callback(hObject, eventdata, handles)
                     plot(handles.t(DT:end), handles.F.IsolationThreshold(zones(i),:,Isolator),'--')
                     title(sprintf('CIE%d at Zone %d.%s',Isolator, zones(i),handles.B.ZoneName{zones(i)}))
                     xlabel('Time (h)')
+                    ylim([-0.5 max([handles.F.IsolationResidual(zones(i),:,Isolator), handles.F.IsolationThreshold(zones(i),:,Isolator)])+0.5])
                 end
                 legend('Residual', 'Threshold', 'Location', 'Best')
             end
