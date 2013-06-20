@@ -208,7 +208,7 @@ function PlotDetection_Callback(hObject, eventdata, handles)
                     plot(handles.t, handles.F.DetectionThreshold(:,zones(i)),'--')
                     title(sprintf('CDE at Zone %d.%s',zones(i),handles.B.ZoneName{zones(i)}))
                     xlabel('Time (h)')
-                    ylim([-0.5 max(handles.F.DetectionThreshold(:,i))+0.5])
+                    ylim([-0.5 max(handles.F.DetectionThreshold(:,zones(i)))+0.5])
                 end
                 legend('Threshold', 'Location', 'Best')
             end
@@ -239,7 +239,7 @@ function PlotDetection_Callback(hObject, eventdata, handles)
                     plot(handles.t, handles.F.DetectionResidual(:,zones(i)),'r')
                     title(sprintf('CDE at Zone %d.%s',zones(i),handles.B.ZoneName{zones(i)}))
                     xlabel('Time (h)')
-                    ylim([-0.5 max(handles.F.DetectionResidual(:,i))+0.5])
+                    ylim([-0.5 max(handles.F.DetectionResidual(:,zones(i)))+0.5])
                 end
                 legend('Residual', 'Location', 'Best')
             end
@@ -265,7 +265,7 @@ function PlotDetection_Callback(hObject, eventdata, handles)
                     plot(handles.t, handles.F.DetectionThreshold(:,zones(i)),'--')
                     title(sprintf('CDE at Zone %d.%s',zones(i),handles.B.ZoneName{zones(i)}))
                     xlabel('Time (h)')
-                    ylim([-0.5 max(handles.F.DetectionResidual(:,i))+0.5])
+                    ylim([-0.5 max(handles.F.DetectionResidual(:,zones(i)))+0.5])
                 end
                 legend('Residual', 'Threshold', 'Location', 'Best')
             end
