@@ -1557,14 +1557,16 @@ function ComputeImpactMatrix_Callback(hObject, eventdata, handles)
 
     if exist('File0.File','file')==2 
         load([pwd,'\SPLACE\RESULTS\','File0.File'],'-mat');
-        if exist([pathname,file0],'file')==2
+        if exist([pathname,file0],'file')==2 && exist([pathname,file0(1:end-1),'c1'],'file')==2
             if ~isempty(file0) 
                 load([pathname,file0],'-mat');
             else
                 B.filename=handles.B.filename;
             end
         else
-            B.filename=[];
+%             B.filename=[];
+            msgbox('Must be first select Run Multiple Scenarios');
+            return
         end
     else
         file0=[];
