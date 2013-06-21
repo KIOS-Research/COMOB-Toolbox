@@ -1211,7 +1211,7 @@ function FDIrun_Callback(hObject, eventdata, handles)
         % Find the poles to set the L matrix.
         pols = pole(sys)' - 0.1;
     else
-        pols = pole(sys)' - handles.F.UncertaintiesBound*2;
+        pols = pole(sys)' - handles.F.UncertaintiesBound*3;
     end
     
     % Create the L matrix.
