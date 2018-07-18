@@ -1,77 +1,84 @@
-function [Eyj Initial] = IsolationThreshold(DA, d, ksi, rho, ksi_d, rho_d, alpha, zita, alpha_d, zita_d, t, Dt, DetectionTime, ns, C, Theta, Ez0, ZITA, Omega, Initial)
-    warning off all
-    clear inp
-           
-    inp = ones(1,length(t));
+%{
+ Copyright (c) 2018 KIOS Research and Innovation Centre of Excellence
+ (KIOS CoE), University of Cyprus (www.kios.org.cy)
+ 
+ Licensed under the EUPL, Version 1.1 or – as soon they will be approved 
+ by the European Commission - subsequent versions of the EUPL (the "Licence");
+ You may not use this work except in compliance with theLicence.
+ 
+ You may obtain a copy of the Licence at: https://joinup.ec.europa.eu/collection/eupl/eupl-text-11-12
+ 
+ Unless required by applicable law or agreed to in writing, software distributed
+ under the Licence is distributed on an "AS IS" basis,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the Licence for the specific language governing permissions and limitations under the Licence.
+ 
+ Author(s)     : Marinos Christoloulou, Marios Kyriakou and Alexis Kyriacou
+ 
+ Work address  : KIOS Research Center, University of Cyprus
+ email         : akyria09@ucy.ac.cy (Alexis Kyriacou)
+ Website       : http://www.kios.ucy.ac.cy
+ 
+ Last revision : June 2018
+%}
+function [Eyj Exj] = IsolationThreshold(DA, d, Cofcls, t, DetectionTime, ns, nZones, nsour, C, L, Theta, Ez0, x_hat)
 
-    [zn tm] = size(ZITA);
-    % Ez
-    for k = 1:length(t)
-        for j = 1:zn
-            Omega_abs(j,k) = norm(Omega(k,j));
+warning off all
+inp = ones(1,length(t));
+
+ZITA = x_hat(:,1:nZones)';
+if nsour == 1
+    Omega = x_hat(:,(nZones+1):(2*nZones))';
+    
+    Omega_norm = zeros(1,length(t));
+    for i=1:length(t)
+        Omega_norm(i) = norm(Omega(:,i));
+    end
+    
+else
+    for i=1:nsour
+        Omega(:,i,:) = x_hat(:,(i*nZones+1):(i*2*nZones))';
+    end
+    
+    Omega_norm = zeros(1,length(t));
+    for i=1:length(t)
+        Omega_norm(i) = norm(Omega(:,:,i));
+    end
+    
+end
+
+ZITA_norm = sqrt(sum(ZITA'.^2,2));
+
+E1 = Cofcls.rho*exp(-Cofcls.ksi*(t-DetectionTime))*Ez0;
+
+A = [-Cofcls.ksi 0 ; 0 -Cofcls.ksi];
+C2 = [Cofcls.rho*DA 0; 0 Cofcls.rho*d*norm(L)];
+E = lsim(A, eye(2), C2, zeros(2,2), [ZITA_norm'; inp], t);
+
+Ejt = sum([E'; E1; Omega_norm*Theta])';
+
+sys = tf(Cofcls.rho*DA, [1 Cofcls.ksi-Cofcls.rho*DA]);
+
+Ejda = lsim(sys, Ejt, t);
+
+Exj = Ejt + Ejda;
+
+for j=1:ns
+    Ey1(:,j) = Cofcls.alpha(j)*exp(-Cofcls.zita(j)*(t-DetectionTime))*Ez0;
+    
+    if nsour == 1
+        COmega_norm = zeros(1,length(t));
+        for i=1:length(t)
+            COmega_norm(i) = norm(C(j,:)*Omega(:,i));
         end
-%         Omega_abs(k) = norm(Omega(k,:));
-%         ZITA_abs(k)= norm(ZITA(:,k));
-        Ezj1(k)=rho*exp(-ksi*(t(k)-DetectionTime))*Ez0;
-    end
-
-    [ass1 bss1 css1 dss1] = tf2ss(rho*DA, [1 ksi]);
-    sys1 = ss(ass1, bss1, css1, dss1);
-
-    % sys1 = tf(rho*DA, [1 ksi]);
-    parfor j = 1:zn
-        Ezj2(j,:) = lsim(sys1, abs(ZITA(j,:)), Dt, Initial.Ezj20(j));        
-    end
-    
-    Initial.Ezj20 = Ezj2(:,length(t))/rho*DA;
-    
-    [ass2 bss2 css2 dss2] = tf2ss(rho_d*d, [1 ksi_d]);
-    sys2 = ss(ass2, bss2, css2, dss2);
-
-    % sys2 = tf(rho_d*d, [1 ksi_d]);
-    Ezj3 = lsim(sys2, inp, Dt, Initial.Ezj30);
-    Initial.Ezj30 = Ezj3(length(t))/rho_d*d;
-
-    parfor j = 1:zn
-        Ejt(j,:) = Omega_abs(j,:)*Theta + Ezj1 + Ezj2(j,:) + Ezj3';
-    end
-
-
-    [ass3 bss3 css3 dss3] = tf2ss(rho*DA, [1 ksi-rho*DA]);
-    sys3 = ss(ass3, bss3, css3, dss3);
-%     sys3 = tf(rho*DA, [1 ksi-(rho*DA)]);
-    parfor j = 1:zn 
-        Ejda(j,:) = lsim(sys3, Ejt(j,:), Dt, Initial.Ejda0(j));        
-    end
-    Initial.Ejda0 = Ejda(:,length(t))/rho*DA;
-    
-    Ezj_th = Ejt + Ejda;
-
-    % Ey
-    for j=1:ns
-        for k=1:length(t)
-            Eyj1(j,k)=alpha(j)*exp(-zita(j)*(t(k)-DetectionTime))*Ez0;
-            C_Omega(j,k)= norm(C(j,:)*Omega(k,:)');
+    else
+        COmega_norm = zeros(1,length(t));
+        for i=1:length(t)
+            COmega_norm(i) = norm(C(j,:)*Omega(:,:,i));
         end
-    end
-    
-    parfor j=1:ns
-        [ass4 bss4 css4 dss4] = tf2ss(alpha(j)*DA, [1 zita(j)]);
-        sys4 = ss(ass4, bss4, css4, dss4);
-        [ass5 bss5 css5 dss5] = tf2ss(alpha_d(j)*d, [1 zita_d(j)]);
-        sys5 = ss(ass5, bss5, css5, dss5);
-%         sys4= tf(alpha(j)*DA, [1 zita(j)]);
-%         sys5= tf(alpha_d(j)*d, [1 zita_d(j)]);
-
-        Eyj2(j,:)= lsim(sys4, Ezj_th(j,:), Dt, Initial.Eyj20(j));        
-        Eyj3(j,:)= lsim(sys4, abs(ZITA(j,:)), Dt, Initial.Eyj30(j));        
-        Eyj4(j,:)= lsim(sys5, inp, Dt, Initial.Eyj40(j));        
-        Eyj(j,:) = C_Omega(j,:)*Theta + Eyj1(j,:) + Eyj2(j,:) + Eyj3(j,:) + Eyj4(j,:) + d;
-
-    end
-    
-    Initial.Eyj20 = Eyj2(:,length(t))./(alpha.*DA)';
-    Initial.Eyj30 = Eyj3(:,length(t))./(alpha.*DA)';
-    Initial.Eyj40 = Eyj4(:,length(t))./(alpha_d.*d)';
-%         Eyj = Eyj';
-    warning on all
+    end    
+    A2 = [-Cofcls.zita(j) 0 0; 0 -Cofcls.zita(j) 0; 0 0 -Cofcls.zita(j)];
+    C3 = [Cofcls.alpha(j)*DA 0 0; 0 Cofcls.alpha(j)*DA 0; 0 0 Cofcls.alpha(j)*d*norm(L)];
+    Eyj(:,j)= sum([COmega_norm*Theta; Ey1(:,j)'; lsim(A2, eye(3), C3, zeros(3,3), [Exj'; ZITA_norm'; inp], t)'; inp.*d])';    
+end
+warning on all
