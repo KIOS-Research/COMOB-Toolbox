@@ -1,0 +1,9 @@
+- SetPartition.m lists all the partitions of a finite set
+- Bell.m gives the number of possible partitions of a finite set
+- Stirling2nd.m gives the number of possible partitions of a finite set
+with fixed number of subsets
+- ReplacePartObj replace the elements of the standard partition list
+- DispPartObj display the list of partitions
+
+Author: Bruno Luong <brunoluong@yahoo.com>
+02-Jun-2009

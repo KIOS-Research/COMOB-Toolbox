@@ -1,15 +1,25 @@
 %{
- Copyright 2013 KIOS Research Center for Intelligent Systems and Networks, University of Cyprus (www.kios.org.cy)
-
- Licensed under the EUPL, Version 1.1 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
+ Copyright (c) 2018 KIOS Research and Innovation Centre of Excellence
+ (KIOS CoE), University of Cyprus (www.kios.org.cy)
+ 
+ Licensed under the EUPL, Version 1.1 or – as soon they will be approved 
+ by the European Commission - subsequent versions of the EUPL (the "Licence");
  You may not use this work except in compliance with theLicence.
- You may obtain a copy of the Licence at:
-
- http://ec.europa.eu/idabc/eupl
-
- Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an "AS IS" basis,
+ 
+ You may obtain a copy of the Licence at: https://joinup.ec.europa.eu/collection/eupl/eupl-text-11-12
+ 
+ Unless required by applicable law or agreed to in writing, software distributed
+ under the Licence is distributed on an "AS IS" basis,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the Licence for the specific language governing permissions and limitations under the Licence.
+ 
+ Author(s)     : Marinos Christoloulou, Marios Kyriakou and Alexis Kyriacou
+ 
+ Work address  : KIOS Research Center, University of Cyprus
+ email         : akyria09@ucy.ac.cy (Alexis Kyriacou)
+ Website       : http://www.kios.ucy.ac.cy
+ 
+ Last revision : June 2018
 %}
 
 function varargout = SolutionsSesnorsGui(varargin)
@@ -36,7 +46,7 @@ function varargout = SolutionsSesnorsGui(varargin)
 
 % Edit the above text to modify the response to help SolutionsSesnorsGui
 
-% Last Modified by GUIDE v2.5 29-Apr-2013 12:59:22
+% Last Modified by GUIDE v2.5 03-Nov-2014 10:29:01
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -68,17 +78,19 @@ function SolutionsSesnorsGui_OpeningFcn(hObject, eventdata, handles, varargin)
 
     % Choose default command line output for SolutionsSesnorsGui
     handles.output = hObject;
-    set(handles.figure1,'name','S-PLACE:Sensor Placement');
+    set(handles.SolutionsSesnorsGui,'name','S-PLACE:Sensor Placement');
 
     % UIWAIT makes SolutionsSesnorsGui wait for user response (see UIRESUME)
-    % uiwait(handles.figure1);
+    % uiwait(handles.SolutionsSesnorsGui);
     handles.Exhaustive=varargin{1}.Exhaustive;
     handles.file0=varargin{1}.file0;
     handles.B=varargin{1}.B;
+    handles.ZoneID = varargin{1}.ZoneID;
+    handles.PathID = varargin{1}.PathID;
     handles.MainGuiaxes1=varargin{1}.MainGuiaxes1;
     handles.pp.numberOfSensors=varargin{1}.pp.numberOfSensors;
    
-    load([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
+    load([pwd,'\RESULTS\','pathname.File'],'pathname','-mat');
 
     value = get(handles.Exhaustive,'Value');
     if value==1
@@ -105,11 +117,11 @@ function SolutionsSesnorsGui_OpeningFcn(hObject, eventdata, handles, varargin)
             f2=r(3);
             ss1=ss(pp,:);
             Sensors=handles.B.ZoneName{ss1};
-            SensorsSS= [num2str(Sensors),''];
+            SensorsSS= [num2str(Sensors),' (',num2str(ss1(1)),')',''];
             if length(ss1)>1
                 for t=2:length(ss1)
-                    SensorsSS = [SensorsSS,'  ',num2str(handles.B.ZoneName{ss1(t)})];
-                end
+                    SensorsSS = [SensorsSS,'  ',num2str(handles.B.ZoneName{ss1(t)}),' (',num2str(ss1(t)),')'];
+                end            
             end
             w=[w;{['mean=',num2str(sprintf('%10.2f',f1)),'      max=',num2str(sprintf('%10.2f',f2)),'      Zones: ',SensorsSS]}];
             set(handles.SplaceTable,'Value',length(w));
@@ -145,7 +157,12 @@ function SplaceTable_Callback(hObject, eventdata, handles)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns SplaceTable contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from SplaceTable
-
+    
+    % May need to update the data from main GUI
+    hf = findall(0,'tag','figure1');
+    Handles = guidata(hf);
+    handles.B = Handles.B;
+    
     lineSensors = get(handles.SplaceTable,'Value');
     StringSensors = get(handles.SplaceTable,'String');
 
@@ -157,22 +174,28 @@ function SplaceTable_Callback(hObject, eventdata, handles)
         set(handles.SplaceTable,'enable','inactive');
 
         SensorsZonesID=tline(6:end);
-        IsolationDecision=zeros(1,handles.B.nZones);
+%         IsolationDecision=zeros(1,handles.B.nZones);
+        for i=1:handles.B.nZones 
+            handles.B.clr{i} = 'w';
+        end
         IndexZones=zeros(1,handles.B.nZones);
-        for i=1:length(SensorsZonesID)
-            Zones{i}=strcmp(SensorsZonesID(i),handles.B.ZoneName);
-            IndexZones(i)=find(Zones{i},1);
-            if IndexZones(i)~=0
-                IsolationDecision(IndexZones(i))=1;
+        for i=2:2:length(SensorsZonesID)
+            IndexZones(i-1) = str2double(regexprep(SensorsZonesID(i),'[()]',''));
+%             Zones{i}=strcmp(SensorsZonesID(i),handles.B.ZoneName);
+%             IndexZones(i)=find(Zones{i},1);
+            if IndexZones(i-1)~=0
+%                 IsolationDecision(IndexZones(i))=1;
+                handles.B.clr{IndexZones(i-1)} = [153/255 255/255 51/255];
             end
         end
         axes(handles.MainGuiaxes1)
-        plotB(handles.B.X,handles.MainGuiaxes1,handles.B.LevelCounter,IsolationDecision);
+        plotB(handles.B.X,handles.MainGuiaxes1,handles.B.LevelCounter,handles.B.Decomposition,handles.B.clr,handles.B.WindDirection,handles.B.C,handles.ZoneID,handles.PathID);
         axis on
         set(handles.MainGuiaxes1,'Color','w')
         set(handles.MainGuiaxes1,'XTick',[])
         set(handles.MainGuiaxes1,'YTick',[])
         set(handles.SplaceTable,'enable','on');
+        guidata(hObject,handles)
     end
     
 

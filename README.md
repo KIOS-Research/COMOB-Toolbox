@@ -1,9 +1,8 @@
-matlab-contam-toolbox
-=====================
+# COMOB Toolbox #
 
-The `Matlab-CONTAM Toolbox` is an open-source software which operates within the Matlab environment, for providing a programming interface for [CONTAM](http://www.bfrl.nist.gov/IAQanalysis/CONTAM/), a multizone airflow and contaminant transport analysis software with Matlab, a  high-level technical computing software. The goal of the Toolbox is to serve as a common programming framework for research, which facilitates simulating multiple contamination events under varying conditions as well as to store computed data in data structures so that they can be reused by different algorithms.
-
-The `Matlab-CONTAM Toolbox` features a user-friendly Graphical User Interface (GUI) and a modular architecture. It allows the creation of multiple scenarios by varying the different problem parameters (wind direction, wind speed, leakage path openings, source magnitude, evolution rate and onset time) as well as the storage of the computed results in data structures. The data from these scenarios are further analyzed by the developed algorithms for determining solutions for contaminant event monitoring and sensor placement. 
+COMOB (COntaminat MOnitoring in Buildings) is a developed MATLAB toolbox which encapsulates the CONTAM computational engine for generating multiple data sets by varying diferent building parameters. The modularity of the COMOB toolbox facilitates the implementation
+of various algorithms related to contaminant event monitoring. In particular, state-of-the-art algorithms for sensor placement, detection and isolation of contaminant sources are incorporated into the COMOB toolbox. COMOB Toolbox is above all, a common evaluation
+framework that enables the development and evaluation of various methodologies in buildings’ related research.
 
 # Requirements #
 * [Matlab](http://www.mathworks.com/)
@@ -19,9 +18,11 @@ Quality Sensor Placement
 Holmes House
 * Wang, L., Dols, W., Chen, Q.: Using CFD capabilities of CONTAM 3.0 for simulating air flow and contaminant transport in and around buildings. HVAC&R Research, 16(6), 749--763 (Nov 2010) [ref](http://www.tandfonline.com/doi/abs/10.1080/10789669.2010.10390932#.UaMcctI5F8E)
 
+
 # Licences #
 
 ## 1. Matlab-CONTAM Toolbox##
+
 Copyright 2013 KIOS Research Center for Intelligent Systems and Networks, University of Cyprus (www.kios.org.cy)
 
 Licensed under the EUPL, Version 1.1 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");

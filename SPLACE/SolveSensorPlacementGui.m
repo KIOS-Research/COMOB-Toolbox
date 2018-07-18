@@ -1,15 +1,25 @@
 %{
- Copyright 2013 KIOS Research Center for Intelligent Systems and Networks, University of Cyprus (www.kios.org.cy)
-
- Licensed under the EUPL, Version 1.1 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
+ Copyright (c) 2018 KIOS Research and Innovation Centre of Excellence
+ (KIOS CoE), University of Cyprus (www.kios.org.cy)
+ 
+ Licensed under the EUPL, Version 1.1 or – as soon they will be approved 
+ by the European Commission - subsequent versions of the EUPL (the "Licence");
  You may not use this work except in compliance with theLicence.
- You may obtain a copy of the Licence at:
-
- http://ec.europa.eu/idabc/eupl
-
- Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an "AS IS" basis,
+ 
+ You may obtain a copy of the Licence at: https://joinup.ec.europa.eu/collection/eupl/eupl-text-11-12
+ 
+ Unless required by applicable law or agreed to in writing, software distributed
+ under the Licence is distributed on an "AS IS" basis,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the Licence for the specific language governing permissions and limitations under the Licence.
+ 
+ Author(s)     : Marinos Christoloulou, Marios Kyriakou and Alexis Kyriacou
+ 
+ Work address  : KIOS Research Center, University of Cyprus
+ email         : akyria09@ucy.ac.cy (Alexis Kyriacou)
+ Website       : http://www.kios.ucy.ac.cy
+ 
+ Last revision : June 2018
 %}
 
 function varargout = SolveSensorPlacementGui(varargin)
@@ -36,7 +46,7 @@ function varargout = SolveSensorPlacementGui(varargin)
 
 % Edit the above text to modify the response to help SolveSensorPlacementGui
 
-% Last Modified by GUIDE v2.5 29-Apr-2013 17:59:11
+% Last Modified by GUIDE v2.5 22-Feb-2015 19:31:55
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -70,29 +80,30 @@ function SolveSensorPlacementGui_OpeningFcn(hObject, eventdata, handles, varargi
     handles.output = hObject;
 
     % UIWAIT makes SolveSensorPlacementGui wait for user response (see UIRESUME)
-    % uiwait(handles.figure1);
+    % uiwait(handles.SolveSensorPlacementGui);
 
-    set(handles.figure1,'name','Solve Sensor Placement');
-
+    
     handles.file0 = varargin{1}.file0;
     handles.B = varargin{1}.B;
-    handles.MainGuiaxes1 = varargin{1}.axes1;
-
+%     handles.MainGuiaxes1 = varargin{1}.axes1;
+%     handles.ZoneID = varargin{1}.ZoneID;
+%     handles.PathID = varargin{1}.PathID;
+    
     set(handles.LoadImpactMatrix,'enable','off');
     set(handles.Solve,'enable','off');
-    load([pwd,'\SPLACE\RESULTS\','pathname.File'],'pathname','-mat');
+    load([pwd,'\RESULTS\','pathname.File'],'pathname','-mat');
 
     if exist([pathname,handles.file0,'.0'],'file')==2
         if ~isempty([handles.file0,'.0']) 
             load([pathname,handles.file0,'.0'],'-mat');
         else
-            B.filename=handles.B.filename;
+            B.ProjectName=handles.B.ProjectName;
         end
     else
-        B.filename=[];
+        B.ProjectName=[];
     end
 
-    if ~strcmp(handles.B.filename,B.filename)
+    if ~strcmp(handles.B.ProjectName,B.ProjectName)
         set(handles.FileText0,'String','')
     else
         set(handles.FileText0,'String',[handles.file0,'.0'])
@@ -109,8 +120,12 @@ function SolveSensorPlacementGui_OpeningFcn(hObject, eventdata, handles, varargi
     
     handles.pp=DefaultSolveParameters(hObject,handles);
     
+    handles.msg = '';
+    
     % Update handles structure
     guidata(hObject, handles);
+    
+    uiwait;
     
 function pp=DefaultSolveParameters(hObject,handles)
     pp.solutionMethod=0; % 0 is exhaustive, 1 is evolutionary based
@@ -148,6 +163,8 @@ function varargout = SolveSensorPlacementGui_OutputFcn(hObject, eventdata, handl
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
+varargout{2} = handles.msg;
+delete(hObject);
 
 
 % --- Executes on button press in Exhaustive.
@@ -297,11 +314,21 @@ function Solve_Callback(hObject, eventdata, handles)
         return;
     end
     handles.pp.numberOfSensors=get(handles.numberOfSensors,'String');
-    set(handles.figure1,'visible','off');
+%     set(handles.SolveSensorPlacementGui,'visible','off');
     
-    SolveSensorPlacement(handles)
+    SuccessFlag=SolveSensorPlacement(handles);
     
-    SolutionsSesnorsGui(handles);
+%     value = get(handles.Exhaustive,'Value');
+    
+%     handles.msg=[' Solution of Sensor Placement in file: ',handles.file0,'.y',num2str(handles.pp.solutionMethod),''];
+%     uiwait(msgbox(handles.msg));
+    
+    if SuccessFlag~=0
+        guidata(hObject, handles);
+        uiresume
+    end
+
+%     SolutionsSesnorsGui(handles);
  
     
     
@@ -371,18 +398,19 @@ function LoadImpactMatrix_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
     [fileW,pathName] = uigetfile('*.w','Select the MATLAB *.w file');
-    fileW=[pathName,fileW];
-    fileW=fileW(1:end-2);
-    if isnumeric(fileW)
-        fileW=[];
+    pathfileW=[pathName,fileW];
+    pathfileW=pathfileW(1:end-2);
+    fileW = fileW(1:end-2);
+    if isnumeric(pathfileW)
+        pathfileW=[];
     end
-    if ~isempty((fileW)) 
-        load([fileW,'.w'],'-mat');
+    if ~isempty((pathfileW)) 
+        load([pathfileW,'.w'],'-mat');
         handles.fileW=fileW;
         if ~strcmp(handles.file0,handles.fileW)
             set(handles.Solve,'enable','off');
 %             set(handles.LoadImpactMatrix,'enable','off');
-            msgbox(['        Wrong File "',fileW,'.w"'],'Error','modal');
+            msgbox(['        Wrong File "',pathfileW,'.w"'],'Error','modal');
             set(handles.FileTextW,'String','')
         else
             set(handles.Solve,'enable','on');
@@ -399,23 +427,24 @@ function LoadScenarios_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
     [file0,pathName] = uigetfile('*.0','Select the MATLAB *.0 file');
-    file0=[pathName,file0];
-    file0=file0(1:end-2);
-    if isnumeric(file0)
-        file0=[];
+    pathfile0=[pathName,file0];
+    pathfile0=pathfile0(1:end-2);
+    file0 = file0(1:end-2);
+    if isnumeric(pathfile0)
+        pathfile0=[];
     end
-    if ~isempty((file0)) 
-        load([file0,'.0'],'-mat');clc;
+    if ~isempty((pathfile0)) 
+        load([pathfile0,'.0'],'-mat');clc;
         handles.file0=file0;
-        if ~strcmp(handles.B.filename,B.filename)
+        if ~strcmp(handles.B.ProjectName,B.ProjectName)
             set(handles.Solve,'enable','off');
             set(handles.LoadImpactMatrix,'enable','off');
-            msgbox(['        Wrong File "',file0,'.0"'],'Error','modal');
+            msgbox(['        Wrong File "',pathfile0,'.0"'],'Error','modal');
             set(handles.FileText0,'String','')
         else
             set(handles.LoadImpactMatrix,'enable','on');
             set(handles.Solve,'enable','off');
-            set(handles.FileText0,'String',[handles.file0,'.0']);
+            set(handles.FileText0,'String',[file0,'.0']);
         end
         handles.P=P;
         hanldes.B=B;
@@ -423,3 +452,14 @@ function LoadScenarios_Callback(hObject, eventdata, handles)
         guidata(hObject, handles);
     end
     
+
+
+% --- Executes when user attempts to close SolveSensorPlacementGui.
+function SolveSensorPlacementGui_CloseRequestFcn(hObject, eventdata, handles)
+% hObject    handle to SolveSensorPlacementGui (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: delete(hObject) closes the figure
+% delete(hObject);
+uiresume

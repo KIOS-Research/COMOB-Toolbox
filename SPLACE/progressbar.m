@@ -24,31 +24,34 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Modifications: Marios Kyriakou, KIOS Research Center, 2013.
+Modifications: Marios Kyriakou, KIOS Research and Innovation Centre of Excellence
+ (KIOS CoE), 2013.
 
 %}
 
 
 function progressbar(handles,nload)
-    set(handles.figure1,'name',handles.str);
+%     set(handles.figure1,'name',handles.str);
     set(handles.text_progress,'String',strcat(num2str(0),'%'),'FontSize',8);
     progpatch = patch(...
             'XData',            [0 0 0 0],...
-            'YData',            [0 0 1 1],...
-            'EraseMode',        'none' );
+            'YData',            [0 0 1 1] );
     percentdone = 0;
     set(handles.text_progress,'String',strcat(num2str(percentdone),' %'),'FontSize',8);
     set(progpatch,'FaceColor',handles.color); 
 
     fractiondone = (nload);
     percentdone = floor(100*fractiondone);
-    if percentdone>98
+    if percentdone>99
         percentdone=100; fractiondone=1;
     end
     % Update progress patch
     axes(handles.axes2)
     set(progpatch,'XData',[0 fractiondone fractiondone 0]);
     set(handles.text_progress,'String',strcat(num2str(percentdone),'%'),'FontSize',8);
+    
+    drawnow;
+    %pause(0.1)
     % Force redraw to show changes
-    drawnow
+%     drawnow
 end
