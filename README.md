@@ -1,4 +1,4 @@
-﻿COMOB Toolbox
+# COMOB Toolbox #
 
 COMOB (COntaminat MOnitoring in Buildings) is a developed MATLAB toolbox which encapsulates the CONTAM computational engine for generating multiple data sets by varying diferent building parameters. The modularity of the COMOB toolbox facilitates the implementation
 of various algorithms related to contaminant event monitoring. In particular, state-of-the-art algorithms for sensor placement, detection and isolation of contaminant sources are incorporated into the COMOB toolbox. COMOB Toolbox is above all, a common evaluation
