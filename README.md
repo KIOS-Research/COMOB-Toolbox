@@ -1,5 +1,8 @@
 <a href="http://www.kios.ucy.ac.cy"><img src="http://www.kios.ucy.ac.cy/templates/favourite/images/kios_logo_hover.png"/><a>
 
+<a href="https://doi.org/10.1016/j.buildenv.2019.02.013"><img src="https://zenodo.org/badge/DOI/10.1016/j.buildenv.2019.02.013.svg" alt="DOI"></a>
+
+
 # COMOB Toolbox #
 
 COMOB (COntaminat MOnitoring in Buildings) is a developed MATLAB toolbox which encapsulates the CONTAM computational engine for generating multiple data sets by varying diferent building parameters. The modularity of the COMOB toolbox facilitates the implementation
