@@ -31,7 +31,7 @@ function varargout = MatlabContamToolbox(varargin)
 %      the existing singleton*.
 %
 %      MATLABCONTAMTOOLBOX('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in MATLABCONTAMTOOLBOX.M with the given input arguments.
+%      function named CALLBACK in MATLABCONTAMTOOLBOX.M with the given input argumentsC.
 %
 %      MATLABCONTAMTOOLBOX('Property','Value',...) creates a new MATLABCONTAMTOOLBOX or raises the
 %      existing singleton*.  Starting from the left, property value pairs are
@@ -74,7 +74,7 @@ function MatlabContamToolbox_OpeningFcn(hObject, eventdata, handles, varargin)
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-% varargin   command line arguments to MatlabContamToolbox (see VARARGIN)
+% varargin   command line argumentsC to MatlabContamToolbox (see VARARGIN)
 % Clear Building properties and other variables from base workspace
 evalin( 'base', 'clear' )
 clc % Clear the command window
@@ -474,14 +474,14 @@ elseif strcmp(eventdata.Source.Tag,'Distributed')
   handles.CDI0.ActiveDistributed=1;
 end
 
-% arguments.AlgorithmSelection=eventdata.Source.Parent.Tag;
-arguments.CDI0=handles.CDI0;
-arguments.B=handles.B; % Nominal Building Paramenters
-arguments.Amat = Amat; % Nominal A matrix
+% argumentsC.AlgorithmSelection=eventdata.Source.Parent.Tag;
+argumentsC.CDI0=handles.CDI0;
+argumentsC.B=handles.B; % Nominal Building Paramenters
+argumentsC.Amat = Amat; % Nominal A matrix
 clear B
 guidata(hObject, handles);
 
-[A B]=CDIParametersGUI3(arguments);
+[A B]=CDIParametersGUI3(argumentsC);
 handles.CDI0 = B.CDI0;
 handles.B = B.B;
 guidata(hObject, handles);
@@ -512,11 +512,11 @@ else
     file0=[];
 end
 
-arguments.file0=file0(1:end-2);
-arguments.B=handles.B;
-arguments.CDI0=handles.CDI0;
-arguments.AlgorithmSelection=eventdata.Source.Tag;
-[A B] = RunMultipleCDIGUI(arguments);
+argumentsC.file0=file0(1:end-2);
+argumentsC.B=handles.B;
+argumentsC.CDI0=handles.CDI0;
+argumentsC.AlgorithmSelection=eventdata.Source.Tag;
+[A B] = RunMultipleCDIGUI(argumentsC);
 
 guidata(hObject, handles);
 
@@ -543,10 +543,10 @@ else
     file0=[];
 end
 
-arguments.file0=file0(1:end-2);
-arguments.B=handles.B;
+argumentsC.file0=file0(1:end-2);
+argumentsC.B=handles.B;
 
-[A B]=ComputeImpactMatricesGui(arguments);
+[A B]=ComputeImpactMatricesGui(argumentsC);
 
 guidata(hObject, handles);
 
@@ -577,10 +577,10 @@ else
     file0=[];
 end
 
-arguments.file0=file0(1:end-2);
-arguments.B=handles.B;
+argumentsC.file0=file0(1:end-2);
+argumentsC.B=handles.B;
 
-[A B]=SolveSensorPlacementGui(arguments); % Solve Sensor Placement
+[A B]=SolveSensorPlacementGui(argumentsC); % Solve Sensor Placement
 
 guidata(hObject, handles);
 
@@ -642,10 +642,10 @@ for i=1:handles.B.nZones
     handles.B.clr{i} = 'w'; % color for the zone area    
 end
 
-arguments.file0=file0(1:end-2);
-arguments.B=handles.B;
+argumentsC.file0=file0(1:end-2);
+argumentsC.B=handles.B;
 
-[A B] = runMultipleScenariosGui(arguments);
+[A B] = runMultipleScenariosGui(argumentsC);
 
 guidata(hObject, handles);
 
@@ -654,19 +654,19 @@ function SetDistributedSubsystems_Callback(hObject, eventdata, handles)
 % hObject    handle to SetDistributedSubsystems (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-arguments.CDI = handles.CDI0;
-arguments.B = handles.B;
+argumentsC.CDI = handles.CDI0;
+argumentsC.B = handles.B;
 if isfield(handles,'AllPossiblePartitions')
     if ~isempty(handles.AllPossiblePartitions)
-        arguments.AllPossiblePartitions=handles.AllPossiblePartitions;
+        argumentsC.AllPossiblePartitions=handles.AllPossiblePartitions;
     else
-        arguments.AllPossiblePartitions={};
+        argumentsC.AllPossiblePartitions={};
     end
 else
-    arguments.AllPossiblePartitions={};
+    argumentsC.AllPossiblePartitions={};
 end
 
-[A,B,C] = SetDistributedSubsystemsGUI(arguments);
+[A,B,C] = SetDistributedSubsystemsGUI(argumentsC);
 
 handles.CDI0 = B.CDI;
 handles.B = B.B;
@@ -740,9 +740,9 @@ else
     file0=[];
 end
 
-arguments.file0=file0(1:end-2);
-arguments.B=handles.B;
-CDIResultsGUI2(arguments);
+argumentsC.file0=file0(1:end-2);
+argumentsC.B=handles.B;
+CDIResultsGUI2(argumentsC);
 
 % --------------------------------------------------------------------
 function ScenarioResults_Callback(hObject, eventdata, handles)
@@ -770,9 +770,9 @@ else
     file0=[];
 end
 
-arguments.file0=file0(1:end-2);
-arguments.B=handles.B;
-ScenarioResultsGUI(arguments);
+argumentsC.file0=file0(1:end-2);
+argumentsC.B=handles.B;
+ScenarioResultsGUI(argumentsC);
 
 
 % --- Executes on button press in ChooseSimulationData.
@@ -781,9 +781,9 @@ function ChooseSimulationData_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-arguments.Sim = handles.Sim;
-arguments.B = handles.BR;
-[A B] = SimulationDataGUI(arguments);
+argumentsC.Sim = handles.Sim;
+argumentsC.B = handles.BR;
+[A B] = SimulationDataGUI(argumentsC);
 handles.Sim = B.Sim;
 
 % Update handles structure
@@ -799,14 +799,14 @@ fileR = get(handles.ResultsFileText,'String');
 [Path Name Extension] =  fileparts(fileR);
 SceNum = regexp(Extension,'\d+','match');
 Extn = Extension(1:end-length(SceNum{1}));
-arguments.pathName = handles.pathName;
-arguments.file0=file0;
-arguments.fileR=fileR;
+argumentsC.pathName = handles.pathName;
+argumentsC.file0=file0;
+argumentsC.fileR=fileR;
 switch Extn            
     case '.c'        
-        ScenarioResultsGUI(arguments);        
+        ScenarioResultsGUI(argumentsC);        
     case '.cdi'
-        CDIResultsGUI2(arguments);        
+        CDIResultsGUI2(argumentsC);        
 end
             
 
@@ -888,10 +888,10 @@ if exist('File0.File','file')==2
             if exist([pathname,filey],'file')==2
                            
                 if ~isempty(filey) 
-                     arguments.filey=filey;
+                     argumentsC.filey=filey;
                 end
             else
-                arguments.filey=[];
+                argumentsC.filey=[];
             end
         else
             B.ProjectName = handles.B.ProjectName;
@@ -903,12 +903,12 @@ else
     file0=[];
 end
 
-arguments.file0=file0(1:end-2);
-arguments.B=handles.B;
-arguments.axes1=handles.axes1;
-arguments.axes5=handles.axes5;
-arguments.ZoneID=get(handles.ZoneID,'Value');
-arguments.PathID=get(handles.PathID,'Value');
+argumentsC.file0=file0(1:end-2);
+argumentsC.B=handles.B;
+argumentsC.axes1=handles.axes1;
+argumentsC.axes5=handles.axes5;
+argumentsC.ZoneID=get(handles.ZoneID,'Value');
+argumentsC.PathID=get(handles.PathID,'Value');
 
 handles.File.Enable='off';
 handles.SimulateScenarios.Enable='off';
@@ -916,7 +916,7 @@ handles.Algorithms.Enable='off';
 handles.Results.Enable='off';
 
 
-SensorPlacementResults(arguments);
+SensorPlacementResults(argumentsC);
 
 % --------------------------------------------------------------------
 function File_Callback(hObject, eventdata, handles)
